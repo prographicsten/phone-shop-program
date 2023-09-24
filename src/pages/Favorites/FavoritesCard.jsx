@@ -1,39 +1,9 @@
-import { Link, json } from "react-router-dom";
-import swal from "sweetalert";
 
-const PhoneCard = ({phone}) => {
+const FavoritesCard = ({phone}) => {
     const {brand_name, id, image, phone_name, price, rating} = phone || {};
 
-    const handleAddToFavorites = () => {
-        // console.log(phone);
-        const addedFavoritesArray = [];
-        const favoritesItems = JSON.parse(localStorage.getItem('favorites'));
-
-        if (!favoritesItems) {
-            addedFavoritesArray.push(phone);
-            localStorage.setItem('favorites', JSON.stringify(addedFavoritesArray));
-            swal("Good job!", "Product added succesfully", "success");
-        }else {
-            const isExists = favoritesItems.find(phone => phone.id === id);
-            // console.log(isExists);
-
-            if(!isExists) {
-                addedFavoritesArray.push(...favoritesItems, phone);
-                localStorage.setItem('favorites', JSON.stringify(addedFavoritesArray));
-                swal("Good job!", "Product added succesfully", "success");
-            }else{
-                swal("Error!", "No Duplicated allow", "error");
-            }
-
-        }
-
-        // console.log(favoritesItems);
-        // localStorage.setItem('favorites', JSON.stringify([phone]));
-    };
-
     return (
-        <div>
-            <div class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                 <div class="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
                     <img
                     src={image}
@@ -49,8 +19,8 @@ const PhoneCard = ({phone}) => {
                     {phone_name}
                     </h4>
                     
-                    <Link class="inline-block" href="#">
-                    <button onClick={handleAddToFavorites}
+                    <a class="inline-block" href="#">
+                    <button
                         class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button"
                     >
@@ -71,11 +41,10 @@ const PhoneCard = ({phone}) => {
                         ></path>
                         </svg>
                     </button>
-                    </Link>
+                    </a>
                 </div>
             </div>
-        </div>
     );
 };
 
-export default PhoneCard;
+export default FavoritesCard;
