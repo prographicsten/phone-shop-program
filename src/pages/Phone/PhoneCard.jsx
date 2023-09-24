@@ -1,7 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
+import swal from "sweetalert";
 
 const PhoneCard = ({phone}) => {
     const {brand_name, id, image, phone_name, price, rating} = phone || {};
+
+    const handleAddToFavorites = () => {
+        // console.log(phone);
+        const addedFavoritesArray = [];
+        const favoritesItems = JSON.parse(localStorage.getItem('favorites'));
+
+        if (!favoritesItems) {
+            addedFavoritesArray.push(phone);
+            localStorage.setItem('favorites', JSON.stringify(addedFavoritesArray));
+        }else {
+            const isExists = favoritesItems.find(phone => phone.id === id);
+            console.log(isExists);
+
+            if(!isExists) {
+                addedFavoritesArray.push(...favoritesItems, phone);
+                localStorage.setItem('favorites', JSON.stringify(addedFavoritesArray));
+                swal("Good job!", "Product added succesfully", "success");
+            }else{
+                swal("Error!", "No Duplicated allow", "error");
+            }
+
+        }
+
+        console.log(favoritesItems);
+        // localStorage.setItem('favorites', JSON.stringify([phone]));
+    };
 
     return (
         <div>
@@ -22,7 +49,7 @@ const PhoneCard = ({phone}) => {
                     </h4>
                     
                     <Link class="inline-block" href="#">
-                    <button
+                    <button onClick={handleAddToFavorites}
                         class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button"
                     >

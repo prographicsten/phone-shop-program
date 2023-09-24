@@ -17,7 +17,7 @@ const Phone = () => {
         setPhone(findPhone);
     }, [id, phones]);
 
-    console.log(phone);
+    // console.log(phone);
 
     return (
         <div className="py-10 flex justify-center h-[80vh] items-center">
