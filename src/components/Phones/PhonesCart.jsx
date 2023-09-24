@@ -1,3 +1,4 @@
+import Rating from "react-rating";
 import { Link } from "react-router-dom";
 
 const PhonesCart = ({phone}) => {
@@ -27,7 +28,15 @@ const PhonesCart = ({phone}) => {
                 </p>
                 </div>
                 <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
+                <div className="flex gap-4">
+                <Rating
+                emptySymbol={<i className='bx bx-star text-green-400' ></i>}
+                fullSymbol={<i className='bx bxs-star text-red-500'></i>}
+                initialRating={rating}
+                readonly
+                />
                 {rating}
+                </div>
                 </p>
             </div>
             <div className="p-6 pt-0">
