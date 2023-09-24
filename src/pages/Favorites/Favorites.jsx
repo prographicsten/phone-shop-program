@@ -12,11 +12,17 @@ const Favorites = () => {
     const [notFound, setNotFound] = useState(false);
     const [isShow, setIsShow] = useState(false);
 
+    const [totalPrice, setTotalPrice] = useState(0);
+
     useEffect(() => {
         const favoritesItems = JSON.parse(localStorage.getItem('favorites'));
         
         if(favoritesItems){
             setFavorites(favoritesItems);
+            // count amount of favorites products
+            const total = favoritesItems.reduce((preValue, currentPrice) => preValue + currentPrice.price, 0);
+            console.log(total);
+            setTotalPrice(total);
         }else{
             setNotFound('Not data found for favorites');
         }
@@ -42,7 +48,13 @@ const Favorites = () => {
                 </div> 
                 :
                 <div>
-                    {favorites.length > 0 && <button onClick={() => handleRemove()} className="px-5 py-1 bg-green-300 block rounded-sm mx-auto mb-10">Deleted All Favorites</button>}
+                    {
+                    favorites.length > 0 && 
+                    <div>
+                        <button onClick={() => handleRemove()} className="px-5 py-1 bg-green-300 block rounded-sm mx-auto mb-10">Deleted All Favorites</button>
+                        <h1 className="text-xl font-semibold mb-5">Total Price of Products : <span className="text-green-400">{totalPrice.toFixed(2)}</span></h1>
+                    </div>
+                    }
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                         {/* You can use 1 model */}
                         {
